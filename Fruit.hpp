@@ -1,0 +1,42 @@
+//
+// Created by pc on 06.07.2026.
+//
+
+#ifndef FRUIT_HPP
+#define FRUIT_HPP
+#include <random>
+#include "SFML/Graphics/RectangleShape.hpp"
+
+class Fruit {
+
+    public:
+    Fruit() {
+
+    }
+
+    void draw(sf::RenderWindow &window) {
+        sf::RectangleShape owoc(sf::Vector2f(40.f,40.f));
+        sf::Color czerwo(120, 0, 0);
+        owoc.setFillColor(czerwo);
+        float x = position.x * 40;
+        float y = position.y * 40;
+        owoc.setPosition(sf::Vector2f(x,y));
+        window.draw(owoc);
+    }
+
+    void randomize() {
+        std::random_device rd;
+        std::mt19937 gen(rd());
+    }
+
+    sf::Vector2i getPosition(){
+        return position;
+    }
+
+private:
+    sf::Vector2i position;
+};
+
+
+
+#endif //FRUIT_HPP
