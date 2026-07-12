@@ -27,6 +27,8 @@ class Fruit {
     void randomize() {
         std::random_device rd;
         std::mt19937 gen(rd());
+        std::uniform_int_distribution<> distr(0, 19);
+        int randomNumber = distr(gen);
     }
 
     sf::Vector2i getPosition(){
