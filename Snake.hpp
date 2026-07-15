@@ -18,6 +18,7 @@ public:
         body.push_back(sf::Vector2i(4, 11));
         direction = RIGHT;
         canTurn = true;
+        dead = false;
     }
 
     void draw(sf::RenderWindow &window) {
@@ -34,7 +35,7 @@ public:
     }
 
     void changeDirection(Direction newDirection) {
-        if (canTurn){
+        if (canTurn && !dead) {
             if (newDirection == UP && direction != DOWN) {
                 direction = UP;
                 canTurn = false;
@@ -68,6 +69,32 @@ public:
         canTurn = true;
     }
 
+    void collision() {
+        //otoczenie
+        if (body[0].x < 0 || body[0].y < 0 || body[0].x > 19 || body[0].y > 19) {
+            dead = true;
+        }
+        //wlasne cialo
+        for (int i = 1; i < body.size(); i++) {
+            if (body[0] == body[i]){
+                dead = true;
+            }
+        }
+    }
+
+    bool amIHere(sf::Vector2i position) {
+        for (int i = 0; i < body.size(); i++) {
+            if (body[i] == position) {
+                return true;
+            }
+        }
+        return false;
+    }
+
+    bool isDead() {
+        return dead;
+    }
+
     void growth() {
         body.push_back(tailPosition);
     }
@@ -80,6 +107,7 @@ private:
     std::vector<sf::Vector2i> body;
     Direction direction;
     bool canTurn;
+    bool dead;
     sf::Vector2i tailPosition;
 };
 

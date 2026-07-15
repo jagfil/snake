@@ -39,8 +39,14 @@ int main() {
             clock.restart();
             snake.move();
             if (snake.getHeadPosition() == fruit.getPosition()) {
-                fruit.randomize();
                 snake.growth();
+                do {
+                    fruit.randomize();
+                } while (snake.amIHere(fruit.getPosition()));
+            }
+            snake.collision();
+            if (snake.isDead()) {
+                //game over pozdro
             }
         }
 
