@@ -46,7 +46,7 @@ int main() {
             }
             snake.collision();
             if (snake.isDead()) {
-                //game over pozdro
+                //game over
             }
         }
 
