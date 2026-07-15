@@ -17,6 +17,7 @@ public:
         body.push_back(sf::Vector2i(5, 11));
         body.push_back(sf::Vector2i(4, 11));
         direction = RIGHT;
+        canTurn = true;
     }
 
     void draw(sf::RenderWindow &window) {
@@ -33,18 +34,24 @@ public:
     }
 
     void changeDirection(Direction newDirection) {
-        if (newDirection == UP && direction != DOWN) {
-            direction = UP;
-        }else if (newDirection == DOWN && direction != UP) {
-            direction = DOWN;
-        }else if (newDirection == LEFT && direction != RIGHT) {
-            direction = LEFT;
-        }else if (newDirection == RIGHT && direction != LEFT) {
-            direction = RIGHT;
+        if (canTurn){
+            if (newDirection == UP && direction != DOWN) {
+                direction = UP;
+                canTurn = false;
+            }else if (newDirection == DOWN && direction != UP) {
+                direction = DOWN;
+                canTurn = false;
+            }else if (newDirection == LEFT && direction != RIGHT) {
+                direction = LEFT;
+                canTurn = false;
+            }else if (newDirection == RIGHT && direction != LEFT) {
+                direction = RIGHT;
+                canTurn = false;
+            }
         }
     }
 
-    void move(bool eaten) {
+    void move() {
         sf::Vector2i newHead = body[0];
         if (direction == UP) {
             newHead.y--;
@@ -55,10 +62,14 @@ public:
         }else if (direction == RIGHT) {
             newHead.x++;
         }
+        tailPosition = body.back();
         body.insert(body.begin(), newHead);
-        if (!eaten) {
-            body.pop_back();
-        }
+        body.pop_back();
+        canTurn = true;
+    }
+
+    void growth() {
+        body.push_back(tailPosition);
     }
 
     sf::Vector2i getHeadPosition(){
@@ -68,6 +79,8 @@ public:
 private:
     std::vector<sf::Vector2i> body;
     Direction direction;
+    bool canTurn;
+    sf::Vector2i tailPosition;
 };
 
 

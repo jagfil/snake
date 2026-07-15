@@ -5,7 +5,7 @@
 int main() {
 
     sf::RenderWindow window(sf::VideoMode(800,800),"Snake");
-    window.setFramerateLimit(60);
+    window.setFramerateLimit(600);
     sf::Color rozowyciem (255, 204, 253);
     sf::Color rozowyjas (255, 183, 232);
     sf::Clock clock;
@@ -13,6 +13,7 @@ int main() {
     float pixelX;
     float pixelY;
     Snake snake;
+    Fruit fruit;
 
     while (window.isOpen()) {
         sf::Event event;
@@ -34,10 +35,13 @@ int main() {
             }
         }
 
-        if (clock.getElapsedTime().asSeconds() >= 0.2f) {
-            snake.move(false);
+        if (clock.getElapsedTime().asSeconds() >= 0.13f) {
             clock.restart();
-            snake.getHeadPosition();
+            snake.move();
+            if (snake.getHeadPosition() == fruit.getPosition()) {
+                fruit.randomize();
+                snake.growth();
+            }
         }
 
         window.clear(sf::Color::White);
@@ -56,17 +60,8 @@ int main() {
             }
         }
 
-        /*if (snakehead.position == fruit.position){
-         snake++;
-         fruit.randomize
-         }
-
-         if(fruit.position == snakebody,position){
-         fruit.randomize
-         }
-        */
-
         snake.draw(window);
+        fruit.draw(window);
 
         window.display();
     }
