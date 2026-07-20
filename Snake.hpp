@@ -13,9 +13,9 @@ class Snake {
 public:
 
     Snake() {
-        body.push_back(sf::Vector2i(6, 11));
-        body.push_back(sf::Vector2i(5, 11));
-        body.push_back(sf::Vector2i(4, 11));
+        body.push_back(sf::Vector2i(4, 10));
+        body.push_back(sf::Vector2i(3, 10));
+        body.push_back(sf::Vector2i(2, 10));
         direction = RIGHT;
         canTurn = true;
         dead = false;
@@ -27,8 +27,8 @@ public:
         segment.setFillColor(braz);
 
         for (int i = 0; i < body.size(); i++) {
-            float pixelX = body[i].x * 40.f;
-            float pixelY = body[i].y * 40.f;
+            float pixelX = body[i].x * 40.f + 50.f;
+            float pixelY = body[i].y * 40.f + 150.f;
             segment.setPosition(sf::Vector2f(pixelX,pixelY));
             window.draw(segment);
         }
@@ -53,25 +53,27 @@ public:
     }
 
     void move() {
-        sf::Vector2i newHead = body[0];
-        if (direction == UP) {
-            newHead.y--;
-        }else if (direction == DOWN) {
-            newHead.y++;
-        }else if (direction == LEFT) {
-            newHead.x--;
-        }else if (direction == RIGHT) {
-            newHead.x++;
+        if (!isDead()) {
+            sf::Vector2i newHead = body[0];
+            if (direction == UP) {
+                newHead.y--;
+            }else if (direction == DOWN) {
+                newHead.y++;
+            }else if (direction == LEFT) {
+                newHead.x--;
+            }else if (direction == RIGHT) {
+                newHead.x++;
+            }
+            tailPosition = body.back();
+            body.insert(body.begin(), newHead);
+            body.pop_back();
+            canTurn = true;
         }
-        tailPosition = body.back();
-        body.insert(body.begin(), newHead);
-        body.pop_back();
-        canTurn = true;
     }
 
     void collision() {
         //otoczenie
-        if (body[0].x < 0 || body[0].y < 0 || body[0].x > 19 || body[0].y > 19) {
+        if (body[0].x < 0 || body[0].y < 0 || body[0].x > 14 || body[0].y > 14) {
             dead = true;
         }
         //wlasne cialo

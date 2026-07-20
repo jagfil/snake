@@ -19,6 +19,7 @@ add_executable(snake
         main.cpp
         Snake.hpp
         Fruit.hpp
+        Game.hpp
 )
 
 target_compile_definitions(snake PRIVATE SFML_STATIC)
