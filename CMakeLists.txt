@@ -22,6 +22,8 @@ add_executable(snake
         Game.hpp
 )
 
+file(COPY assets DESTINATION ${CMAKE_BINARY_DIR})
+
 target_compile_definitions(snake PRIVATE SFML_STATIC)
 
 target_link_libraries(snake PRIVATE sfml-graphics sfml-window sfml-system)

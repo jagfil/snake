@@ -19,7 +19,7 @@ class Fruit {
         sf::Color czerwo(200, 0, 0);
         owoc.setFillColor(czerwo);
         float x = position.x * 40 + 50;
-        float y = position.y * 40 + 150;
+        float y = position.y * 40 + 100;
         owoc.setPosition(sf::Vector2f(x,y));
         window.draw(owoc);
     }

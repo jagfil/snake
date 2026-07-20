@@ -21,6 +21,16 @@ public:
         dead = false;
     }
 
+    void restart() {
+        body.clear();
+        body.push_back(sf::Vector2i(4, 10));
+        body.push_back(sf::Vector2i(3, 10));
+        body.push_back(sf::Vector2i(2, 10));
+        direction = RIGHT;
+        canTurn = true;
+        dead = false;
+    }
+
     void draw(sf::RenderWindow &window) {
         sf::RectangleShape segment(sf::Vector2f(40.f,40.f));
         sf::Color braz(120, 76, 0);
@@ -28,7 +38,7 @@ public:
 
         for (int i = 0; i < body.size(); i++) {
             float pixelX = body[i].x * 40.f + 50.f;
-            float pixelY = body[i].y * 40.f + 150.f;
+            float pixelY = body[i].y * 40.f + 100.f;
             segment.setPosition(sf::Vector2f(pixelX,pixelY));
             window.draw(segment);
         }
@@ -64,10 +74,14 @@ public:
             }else if (direction == RIGHT) {
                 newHead.x++;
             }
-            tailPosition = body.back();
-            body.insert(body.begin(), newHead);
-            body.pop_back();
-            canTurn = true;
+            if (newHead.x < 0 || newHead.y < 0 || newHead.x > 14 || newHead.y > 14) {
+                dead = true;
+            }else{
+                tailPosition = body.back();
+                body.insert(body.begin(), newHead);
+                body.pop_back();
+                canTurn = true;
+            }
         }
     }
 
