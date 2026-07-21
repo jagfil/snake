@@ -15,9 +15,9 @@ enum State { MENU, PLAYING, STARTING };
 class Game {
 public:
 
-    Game() : window (sf::VideoMode(700,750),"Snake") {
+    Game() : window (sf::VideoMode(650,750),"Snake") {
         window.setFramerateLimit(60);
-        font.loadFromFile("assets/CatMeow-Regular.ttf");
+        font.loadFromFile("assets/fonts/CatMeow-Regular.ttf");
     }
 
     bool isRunning() {
@@ -46,7 +46,8 @@ public:
 
     void draw() {
         window.clear(sf::Color(252, 167, 219));
-
+        frame.setFillColor(sf::Color(240, 151, 193));
+        window.draw(frame);
         for (int i = 0; i <= 14; i++) {
             for (int j = 0; j <= 14; j++) {
                 if ((i+j)%2 == 0 ) {
@@ -54,8 +55,8 @@ public:
                 }else {
                     chunk.setFillColor(rozowyjas);
                 }
-                pixelX = j * 40 + 50;
-                pixelY = i * 40 + 100;
+                pixelX = j * 40 + 25;
+                pixelY = i * 40 + 125;
                 chunk.setPosition(sf::Vector2f(pixelX, pixelY));
                 window.draw(chunk);
             }
@@ -82,8 +83,7 @@ public:
         }
 
         if (state == MENU) {
-            menu.setPosition(150, 150);
-            //menuBack.setPosition(0,0);
+            menu.setPosition(125, 150);
             menu.setFillColor(sf::Color(171, 97, 134));
             menuBack.setFillColor(sf::Color(0,0,0,180));
             window.draw(menuBack);
@@ -156,6 +156,7 @@ private:
     sf::Color rozowyciem = sf::Color(255, 204, 253);
     sf::Color rozowyjas = sf::Color (255, 183, 232);
     sf::RectangleShape chunk = sf::RectangleShape(sf::Vector2f(40.f,40.f));
+    sf::RectangleShape frame = sf::RectangleShape(sf::Vector2f(700.f,100.f));
     sf::RectangleShape menu = sf::RectangleShape(sf::Vector2f(400.f,500.f));
     sf::RectangleShape menuBack = sf::RectangleShape(sf::Vector2f(700.f,750.f));
 

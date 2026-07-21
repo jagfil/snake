@@ -37,8 +37,8 @@ public:
         segment.setFillColor(braz);
 
         for (int i = 0; i < body.size(); i++) {
-            float pixelX = body[i].x * 40.f + 50.f;
-            float pixelY = body[i].y * 40.f + 100.f;
+            float pixelX = body[i].x * 40.f + 25.f;
+            float pixelY = body[i].y * 40.f + 125.f;
             segment.setPosition(sf::Vector2f(pixelX,pixelY));
             window.draw(segment);
         }

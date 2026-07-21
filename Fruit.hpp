@@ -18,8 +18,8 @@ class Fruit {
         sf::RectangleShape owoc(sf::Vector2f(40.f,40.f));
         sf::Color czerwo(200, 0, 0);
         owoc.setFillColor(czerwo);
-        float x = position.x * 40 + 50;
-        float y = position.y * 40 + 100;
+        float x = position.x * 40 + 25;
+        float y = position.y * 40 + 125;
         owoc.setPosition(sf::Vector2f(x,y));
         window.draw(owoc);
     }
