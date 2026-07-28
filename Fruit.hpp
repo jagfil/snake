@@ -9,6 +9,7 @@
 
 class Fruit {
 
+
     public:
     Fruit() {
         randomize();
