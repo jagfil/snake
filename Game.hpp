@@ -17,7 +17,7 @@ public:
 
     Game() : window (sf::VideoMode(650,750),"Snake") {
         window.setFramerateLimit(60);
-        font.loadFromFile("assets/fonts/CatMeow-Regular.ttf");
+        font.loadFromFile("../assets/fonts/CatMeow-Regular.ttf");
     }
 
     bool isRunning() {

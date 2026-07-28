@@ -29,19 +29,111 @@ public:
         direction = RIGHT;
         canTurn = true;
         dead = false;
+        headTexture.loadFromFile("../assets/textures/dog/head.png");
+        bodyTexture.loadFromFile("../assets/textures/dog/body.png");
+        tailTexture.loadFromFile("../assets/textures/dog/tail.png");
+        curveTexture.loadFromFile("../assets/textures/dog/curve.png");
     }
 
     void draw(sf::RenderWindow &window) {
-        sf::RectangleShape segment(sf::Vector2f(40.f,40.f));
-        sf::Color braz(120, 76, 0);
-        segment.setFillColor(braz);
+        //sf::RectangleShape segment(sf::Vector2f(40.f,40.f));
+        //sf::Color braz(120, 76, 0);
+        //segment.setFillColor(braz);
 
+        sf::Sprite sprite;
         for (int i = 0; i < body.size(); i++) {
+            sprite.setRotation(0);
+            if (i==0) {
+                sprite.setTexture(headTexture);
+                sprite.setRotation(getHeadRotation());
+
+            }else if (i==body.size()-1) {
+                sprite.setTexture(tailTexture);
+                sprite.setRotation(getTailRotation());
+            }else {
+                if (isCurve(i)) {
+                    sprite.setTexture(curveTexture);
+                    sprite.setRotation(getCurveRotation(i));
+                }else {
+                    sprite.setTexture(bodyTexture);
+                }
+            }
+
             float pixelX = body[i].x * 40.f + 25.f;
             float pixelY = body[i].y * 40.f + 125.f;
-            segment.setPosition(sf::Vector2f(pixelX,pixelY));
-            window.draw(segment);
+
+            sprite.setOrigin(20.f, 20.f);
+            sprite.setPosition(pixelX + 20.f, pixelY + 20.f);
+
+            window.draw(sprite);
         }
+
+        //for (int i = 0; i < body.size(); i++) {
+          //  float pixelX = body[i].x * 40.f + 25.f;
+            //float pixelY = body[i].y * 40.f + 125.f;
+            //segment.setPosition(sf::Vector2f(pixelX,pixelY));
+            //window.draw(segment);
+        //}
+    }
+
+    float getHeadRotation() {
+        if (direction == UP)
+            return 0;
+        if (direction == DOWN)
+            return 180;
+        if (direction == LEFT)
+            return 270;
+        if (direction == RIGHT)
+            return 90;
+
+        return 0;
+    }
+
+    float getTailRotation() {
+        sf::Vector2i tail = body.back();
+        sf::Vector2i beforeTail = body[body.size() - 2];
+
+        if (tail.x > beforeTail.x)
+            return 270;
+        if (tail.x < beforeTail.x)
+            return 90;
+        if (tail.y > beforeTail.y)
+            return 0;
+        if (tail.y < beforeTail.y)
+            return 180;
+
+        return 0;
+    }
+
+    float getCurveRotation(int i)
+    {
+        sf::Vector2i previous = body[i-1];
+        sf::Vector2i current = body[i];
+        sf::Vector2i next = body[i+1];
+
+        if ((previous.y > current.y && next.x < current.x) ||
+            (next.y > current.y && previous.x < current.x))
+            return 0;
+
+        if ((previous.y > current.y && next.x > current.x) ||
+            (next.y > current.y && previous.x > current.x))
+            return 90;
+
+        if ((previous.y < current.y && next.x > current.x) ||
+            (next.y < current.y && previous.x > current.x))
+            return 180;
+
+        return 270;
+    }
+
+    bool isCurve(int i) {
+        sf::Vector2i before = body[i-1];
+        sf::Vector2i current = body[i];
+        sf::Vector2i after = body[i+1];
+
+        bool horizontal = (before.x == current.x && before.y == current.y);
+        bool vertical = (after.x == current.x && after.y == current.y);
+        return horizontal && vertical;
     }
 
     void changeDirection(Direction newDirection) {
@@ -86,10 +178,6 @@ public:
     }
 
     void collision() {
-        //otoczenie
-        if (body[0].x < 0 || body[0].y < 0 || body[0].x > 14 || body[0].y > 14) {
-            dead = true;
-        }
         //wlasne cialo
         for (int i = 1; i < body.size(); i++) {
             if (body[0] == body[i]){
@@ -125,6 +213,10 @@ private:
     bool canTurn;
     bool dead;
     sf::Vector2i tailPosition;
+    sf::Texture headTexture;
+    sf::Texture bodyTexture;
+    sf::Texture tailTexture;
+    sf::Texture curveTexture;
 };
 
 
