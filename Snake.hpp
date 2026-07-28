@@ -12,7 +12,6 @@ enum Direction { UP, DOWN, LEFT, RIGHT };
 class Snake {
 public:
 
-
     Snake() {
         body.push_back(sf::Vector2i(4, 10));
         body.push_back(sf::Vector2i(3, 10));
