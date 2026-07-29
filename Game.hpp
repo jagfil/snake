@@ -74,7 +74,7 @@ public:
         highScoreText.setCharacterSize(40);
         highScoreText.setString(std::string("High Score: ") + std::to_string(highScore));
         highScoreText.setFillColor(sf::Color::White);
-        highScoreText.setPosition(300, 25);
+        highScoreText.setPosition(270, 25);
         window.draw(highScoreText);
 
         if (state == STARTING) {

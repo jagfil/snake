@@ -56,6 +56,7 @@ public:
                     sprite.setRotation(getCurveRotation(i));
                 }else {
                     sprite.setTexture(bodyTexture);
+                    sprite.setRotation(getBodyRotation(i));
                 }
             }
 
@@ -89,6 +90,15 @@ public:
         return 0;
     }
 
+    float getBodyRotation(int i) {
+        sf::Vector2i previous = body[i-1];
+        sf::Vector2i next = body[i+1];
+        if (previous.y == next.y) {
+            return 90;
+        }
+        return 0;
+    }
+
     float getTailRotation() {
         sf::Vector2i tail = body.back();
         sf::Vector2i beforeTail = body[body.size() - 2];
@@ -117,13 +127,13 @@ public:
 
         if ((previous.y > current.y && next.x > current.x) ||
             (next.y > current.y && previous.x > current.x))
-            return 90;
+            return 270;
 
         if ((previous.y < current.y && next.x > current.x) ||
             (next.y < current.y && previous.x > current.x))
             return 180;
 
-        return 270;
+        return 90;
     }
 
     bool isCurve(int i) {
@@ -131,8 +141,8 @@ public:
         sf::Vector2i current = body[i];
         sf::Vector2i after = body[i+1];
 
-        bool horizontal = (before.x == current.x && before.y == current.y);
-        bool vertical = (after.x == current.x && after.y == current.y);
+        bool horizontal = (before.x != current.x || after.x != current.x);
+        bool vertical = (before.y != current.y || after.y != current.y);
         return horizontal && vertical;
     }
 
