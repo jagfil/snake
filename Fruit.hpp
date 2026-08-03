@@ -7,6 +7,8 @@
 #include <random>
 #include "SFML/Graphics/RectangleShape.hpp"
 
+enum fruits{BALL, SOCK, BONE};
+
 class Fruit {
 
     public:
